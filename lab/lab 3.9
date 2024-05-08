@@ -1,0 +1,86 @@
+#include <iostream>
+
+using namespace std;
+
+// Базовий клас "Чотирикутник"
+class Quadrilateral {
+protected:
+    double side1, side2, side3, side4;
+
+public:
+    Quadrilateral(double s1, double s2, double s3, double s4)
+        : side1(s1), side2(s2), side3(s3), side4(s4) {}
+
+    // Вивід у потік
+    friend ostream& operator<<(ostream& out, const Quadrilateral& quad) {
+        out << "Side 1: " << quad.side1 << ", ";
+        out << "Side 2: " << quad.side2 << ", ";
+        out << "Side 3: " << quad.side3 << ", ";
+        out << "Side 4: " << quad.side4;
+        return out;
+    }
+
+    // Введення з потоку
+    friend istream& operator>>(istream& in, Quadrilateral& quad) {
+        cout << "Enter side 1: ";
+        in >> quad.side1;
+        cout << "Enter side 2: ";
+        in >> quad.side2;
+        cout << "Enter side 3: ";
+        in >> quad.side3;
+        cout << "Enter side 4: ";
+        in >> quad.side4;
+        return in;
+    }
+
+    // Конструктор копіювання
+    Quadrilateral(const Quadrilateral& other)
+        : side1(other.side1), side2(other.side2), side3(other.side3), side4(other.side4) {}
+
+    // Оператор присвоювання
+    Quadrilateral& operator=(const Quadrilateral& other) {
+        if (this != &other) {
+            side1 = other.side1;
+            side2 = other.side2;
+            side3 = other.side3;
+            side4 = other.side4;
+        }
+        return *this;
+    }
+};
+
+// Похідний клас "Квадрат"
+class Square : public Quadrilateral {
+public:
+    // Конструктор класу "Квадрат"
+    Square(double side)
+        : Quadrilateral(side, side, side, side) {}
+};
+
+int main() {
+    // Тестування класу "Чотирикутник"
+    Quadrilateral quad(4, 5, 6, 7);
+    cout << "Quadrilateral: " << quad << endl;
+
+    // Тестування перевизначеного виводу у потік
+    Square square(5);
+    cout << "Square: " << square << endl;
+
+    // Тестування перевизначеного введення з потоку
+    Quadrilateral newQuad(0, 0, 0, 0);
+    cout << "Enter data for a new quadrilateral:" << endl;
+    cin >> newQuad;
+    cout << "New Quadrilateral: " << newQuad << endl;
+
+    // Тестування конструктора копіювання
+    Quadrilateral quadCopy = quad;
+    cout << "Copy of Quadrilateral: " << quadCopy << endl;
+
+    // Тестування оператора присвоювання
+    Quadrilateral anotherQuad(1, 2, 3, 4);
+    cout << "Original Quadrilateral: " << anotherQuad << endl;
+    anotherQuad = quad;
+    cout << "Updated Quadrilateral: " << anotherQuad << endl;
+
+    return 0;
+}
