@@ -1,0 +1,112 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+// Клас вікно
+class Window {
+protected:
+    int topLeftX, topLeftY;
+    int bottomRightX, bottomRightY;
+    string backgroundColor;
+
+public:
+    // Конструктор за замовчуванням
+    Window() {
+        topLeftX = 0;
+        topLeftY = 0;
+        bottomRightX = 100;
+        bottomRightY = 50;
+        backgroundColor = "White";
+    }
+
+    // Конструктор з параметрами
+    Window(int x1, int y1, int x2, int y2, string color) {
+        topLeftX = x1;
+        topLeftY = y1;
+        bottomRightX = x2;
+        bottomRightY = y2;
+        backgroundColor = color;
+    }
+
+    // Деструктор
+    ~Window() {}
+
+    // Функція друку
+    void print() {
+        cout << "Window Coordinates: (" << topLeftX << "," << topLeftY << ") - (" << bottomRightX << "," << bottomRightY << ")" << endl;
+        cout << "Background Color: " << backgroundColor << endl;
+    }
+
+    // Функція перепризначення кольору тла
+    void setBackgroundColor(string color) {
+        backgroundColor = color;
+    }
+};
+
+// Похідний клас - вікно з меню
+class MenuWindow : public Window {
+private:
+    string menuText;
+
+public:
+    // Конструктор за замовчуванням
+    MenuWindow() : Window() {
+        menuText = "Menu";
+    }
+
+    // Конструктор з параметрами
+    MenuWindow(int x1, int y1, int x2, int y2, string color, string menu) : Window(x1, y1, x2, y2, color) {
+        menuText = menu;
+    }
+
+    // Деструктор
+    ~MenuWindow() {}
+
+    // Функція друку
+    void print() {
+        Window::print();
+        cout << "Menu Text: " << menuText << endl;
+    }
+
+    // Функція перепризначення рядка меню
+    void setMenuText(string menu) {
+        menuText = menu;
+    }
+};
+
+int main() {
+    // Тестування класу Window
+    Window w1;
+    cout << "Window 1:" << endl;
+    w1.print();
+    cout << endl;
+
+    Window w2(10, 10, 50, 30, "Blue");
+    cout << "Window 2:" << endl;
+    w2.print();
+    cout << endl;
+
+    w2.setBackgroundColor("Green");
+    cout << "After changing background color of Window 2:" << endl;
+    w2.print();
+    cout << endl;
+
+    // Тестування класу MenuWindow
+    MenuWindow mw1;
+    cout << "Menu Window 1:" << endl;
+    mw1.print();
+    cout << endl;
+
+    MenuWindow mw2(20, 20, 60, 40, "Red", "File");
+    cout << "Menu Window 2:" << endl;
+    mw2.print();
+    cout << endl;
+
+    mw2.setMenuText("Edit");
+    cout << "After changing menu text of Menu Window 2:" << endl;
+    mw2.print();
+    cout << endl;
+
+    return 0;
+}
