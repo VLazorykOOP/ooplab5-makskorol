@@ -1,0 +1,109 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+// Клас жорсткий диск
+class HardDrive {
+private:
+    int capacity; // Обсяг у Мбайт
+
+public:
+    // Конструктор за замовчуванням
+    HardDrive() {
+        capacity = 0;
+    }
+
+    // Конструктор з параметрами
+    HardDrive(int cap) {
+        capacity = cap;
+    }
+
+    // Метод доступу до обсягу
+    int getCapacity() const {
+        return capacity;
+    }
+};
+
+// Клас комп'ютер
+class Computer {
+private:
+    string brand;
+    float price;
+    HardDrive hdd;
+
+public:
+    // Конструктор за замовчуванням
+    Computer() : hdd() {
+        brand = "Unknown";
+        price = 0.0;
+    }
+
+    // Конструктор з параметрами
+    Computer(string b, float p, int cap) : hdd(cap) {
+        brand = b;
+        price = p;
+    }
+
+    // Деструктор
+    ~Computer() {}
+
+    // Функція друку
+    void print() const {
+        cout << "Brand: " << brand << endl;
+        cout << "Price: $" << price << endl;
+        cout << "Hard Drive Capacity: " << hdd.getCapacity() << " MB" << endl;
+    }
+};
+
+// Похідний клас з монітором
+class ComputerWithMonitor : public Computer {
+private:
+    float screenSize;
+
+public:
+    // Конструктор за замовчуванням
+    ComputerWithMonitor() {
+        screenSize = 0.0;
+    }
+
+    // Конструктор з параметрами
+    ComputerWithMonitor(string b, float p, int cap, float size) : Computer(b, p, cap) {
+        screenSize = size;
+    }
+
+    // Деструктор
+    ~ComputerWithMonitor() {}
+
+    // Функція друку
+    void print() const {
+        Computer::print();
+        cout << "Monitor Size: " << screenSize << " inches" << endl;
+    }
+};
+
+int main() {
+    // Тестування класу Computer
+    Computer comp1;
+    cout << "Computer 1:" << endl;
+    comp1.print();
+    cout << endl;
+
+    Computer comp2("HP", 800.0, 500);
+    cout << "Computer 2:" << endl;
+    comp2.print();
+    cout << endl;
+
+    // Тестування класу ComputerWithMonitor
+    ComputerWithMonitor compMon1;
+    cout << "Computer with Monitor 1:" << endl;
+    compMon1.print();
+    cout << endl;
+
+    ComputerWithMonitor compMon2("Dell", 1200.0, 1000, 24.5);
+    cout << "Computer with Monitor 2:" << endl;
+    compMon2.print();
+    cout << endl;
+
+    return 0;
+}
